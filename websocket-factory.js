@@ -5,19 +5,19 @@ export function addWebSocket(app, id) {
   let ready = false;
   try {
     if (!pathSet.has(id)) {
-      console.log('websocket create /' + id);
+      // console.log('websocket create /' + id);
       pathSet.add(id);
       app.ws('/' + id, {
         compression: uWS.DISABLED,
         maxPayloadLength: 1024,
         idleTimeout: 10,
         open: (ws) => {
-          console.log('websocket connect /' + id);
+          // console.log('websocket connect /' + id);
           ws.subscribe('broadcast');
         },
         message: (ws, message, isBinary) => {
-          console.log('websocket message /' + id);
-          console.log(message);
+          // console.log('websocket message /' + id);
+          // console.log(message);
           ws.publish('broadcast', message, isBinary);
         },
         drain: (ws) => {
@@ -25,7 +25,7 @@ export function addWebSocket(app, id) {
           console.log('size ' + ws.getBufferedAmount());
         },
         close: (ws, code, message) => {
-          console.log('websocket disconnect /' + id);
+          // console.log('websocket disconnect /' + id);
         },
       });
       created = true;
